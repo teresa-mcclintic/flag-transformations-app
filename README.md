@@ -31,7 +31,7 @@ Select **Create Your Own Level**, click a grid square to position the target, an
 
 The app computes the shortest solution for the designed target and requires **at least 7 moves** before permitting the challenge to begin.
 
-Use **Copy challenge link** to send the designed challenge to a partner. Opening that link loads the target as a playable custom challenge, requiring no login or backend. Students can also swap the same device and use **Play this challenge**.
+After selecting a target, choose **Play this challenge** and pass the device to a partner to solve it. No links, email, or accounts are needed.
 
 A distinct personal-best record is kept for each custom target configuration.
 
@@ -39,5 +39,5 @@ A distinct personal-best record is kept for each custom target configuration.
 
 - Completion and best-score records are stored on each browser/device, not collected by the teacher.
 - Clearing site data may erase progress.
-- A custom challenge link contains only the target coordinates and orientation; it contains no student information.
+- Partner challenges run on the same device, with no link sharing or student information required.
 - This version is an independent interactive adaptation, not an official Math Medic product.
