@@ -18,7 +18,8 @@
     @media(max-width:800px){.layout{grid-template-columns:1fr}.side{grid-template-columns:repeat(2,minmax(0,1fr))}.move-card{grid-column:1 / -1}.history-card{grid-column:1 / -1}}@media(max-width:570px){body{padding:15px 10px 30px}.stats{gap:7px}.stat{padding:12px 7px}.stat strong{font-size:24px}.stat span{font-size:12px}.card{padding:13px}.side{grid-template-columns:1fr}.pill{font-size:12px}.arrows{grid-template-columns:repeat(3,70px)}.header{margin-bottom:14px}}
     @media(prefers-reduced-motion:reduce){*{transition:none!important}}
     @media print{.side,.discussion,.stats,.pill{display:none!important}.layout{display:block}.card{box-shadow:none;border:0}}
-  </style>
+  .level-nav{border:1px solid #e1e6ed;background:#fff;padding:15px;border-radius:14px;margin-bottom:14px}.level-list{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.level-button{min-height:49px;border-radius:10px;background:#f4f7fb;border:2px solid #cbd8e7;color:#285277;font-weight:700}.level-button.current{background:#e2f0ff;border-color:#3272b4}.level-button.finished{border-color:#499b74;background:#eef8f2}.level-button:disabled{opacity:.4;cursor:not-allowed}.level-info{font-size:13px;color:#657487;margin:10px 0 0}.arrows{grid-template-columns:repeat(3,80px);grid-template-rows:repeat(2,70px);gap:9px}.arrow{font-size:29px;min-height:70px;background:#e6f2ff;border:2px solid #3574ba;color:#1d5792;box-shadow:0 3px 0 #abc9e4}.arrow:hover:not(:disabled){background:#cde6ff}.arrow:active:not(:disabled){transform:translateY(2px);box-shadow:0 1px 0 #abc9e4}.arrow small{display:block;font-size:11px;letter-spacing:.03em}.move-label{text-align:center;font-size:12px;font-weight:750;color:#2d6095;margin:0 0 12px}.next-level{margin-top:12px;width:100%;background:#276da9;color:#fff;border-color:#276da9}.next-level:hover:not(:disabled){background:#15548a}@media(max-width:570px){.level-list{gap:5px}.level-button{font-size:12px}.arrows{grid-template-columns:repeat(3,75px)}}
+</style>
 </head>
 <body>
 <main class="container">
@@ -26,6 +27,7 @@
     <div><h1>That's Next Level!</h1><p class="subtitle muted">Introduction to Transformations · Interactive Geometry</p></div>
     <div id="status" class="pill">Level 1 · In progress</div>
   </header>
+  <section class="level-nav"><div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:10px"><strong>Five challenges</strong><span id="progress" class="muted" style="font-size:13px">0 of 5 completed</span></div><div id="level-list" class="level-list"></div><p class="level-info" id="level-info"></p></section>
   <section class="stats" aria-label="Move statistics">
     <div class="stat"><span>Total moves</span><strong id="total">0</strong></div>
     <div class="stat"><span>Shifts</span><strong id="shifts">0</strong></div>
@@ -37,7 +39,7 @@
         <text x="14" y="16" fill="#657487" font-size="12">Move the orange flag to match the target.</text>
         <rect x="20" y="28" width="400" height="400" fill="#f8fafc" stroke="#718096" stroke-width="1.5"/>
         <path d="M100 28V428 M180 28V428 M260 28V428 M340 28V428 M20 108H420 M20 188H420 M20 268H420 M20 348H420" fill="none" stroke="#aeb7c2" stroke-width="1"/>
-        <rect x="262" y="190" width="76" height="76" rx="4" fill="#f5d4ab" fill-opacity=".35" stroke="#ddaf75" stroke-dasharray="5 4"/>
+        <rect id="target-cell" x="262" y="190" width="76" height="76" rx="4" fill="#f5d4ab" fill-opacity=".35" stroke="#ddaf75" stroke-dasharray="5 4"/>
         <g id="target-flag" transform="translate(300 228) matrix(0 1 1 0 0 0)" opacity=".48">
           <path d="M0 -29V30" stroke="#986940" stroke-width="3.5" stroke-linecap="round"/>
           <path d="M0 -26L27 -26L34 -16L26 -6L0 -6Z" fill="#e8a76e" stroke="#be8454" stroke-width="1.5" stroke-linejoin="round"/>
@@ -50,23 +52,23 @@
           <circle cx="0" cy="-28" r="3" fill="#456b81"/>
         </g>
         <text x="60" y="451" text-anchor="middle" fill="#657487" font-weight="650" font-size="12">START</text>
-        <text x="300" y="451" text-anchor="middle" fill="#657487" font-weight="650" font-size="12">TARGET: column 4</text>
+        <text id="target-label" x="300" y="451" text-anchor="middle" fill="#657487" font-weight="650" font-size="12">TARGET</text>
       </svg>
       <div class="legend"><span><i class="swatch"></i>Your flag</span><span><i class="swatch target"></i>Target flag</span></div>
       <div id="success" class="success" hidden>
         <strong>✓ Level complete!</strong><div id="success-text"></div>
-        <button id="retry" class="btn" style="margin-top:12px;width:100%">Try a different sequence</button>
+        <button id="next-level" class="btn next-level">Next level →</button><button id="retry" class="btn" style="margin-top:8px;width:100%">Try a different sequence</button>
       </div>
     </section>
     <div class="side">
       <section class="card move-card">
         <h2>1. Shift the flag</h2>
         <p class="help">Each arrow moves the flag one square. You can also use the arrow keys on your keyboard.</p>
-        <div class="arrows">
-          <button id="up" class="btn arrow up" aria-label="Shift up one square" title="Shift up">↑</button>
-          <button id="left" class="btn arrow left" aria-label="Shift left one square" title="Shift left">←</button>
-          <button id="down" class="btn arrow down" aria-label="Shift down one square" title="Shift down">↓</button>
-          <button id="right" class="btn arrow right" aria-label="Shift right one square" title="Shift right">→</button>
+        <p class="move-label">DIRECTION PAD — ONE SQUARE PER TAP</p><div class="arrows">
+          <button id="up" class="btn arrow up" aria-label="Shift up one square" title="Shift up">↑<small>UP</small></button>
+          <button id="left" class="btn arrow left" aria-label="Shift left one square" title="Shift left">←<small>LEFT</small></button>
+          <button id="down" class="btn arrow down" aria-label="Shift down one square" title="Shift down">↓<small>DOWN</small></button>
+          <button id="right" class="btn arrow right" aria-label="Shift right one square" title="Shift right">→<small>RIGHT</small></button>
         </div>
         <h2>2. Transform the flag</h2>
         <p class="help">Rotations and reflections change the flag's orientation but not its grid square.</p>
@@ -88,11 +90,6 @@
       </section>
     </div>
   </div>
-  <section class="card discussion">
-    <h2>Think like a mathematician</h2>
-    <p id="question">Can you get the flags to match? Keep track of how many moves you use.</p>
-    <button id="next-question" class="btn secondary">Next discussion question →</button>
-  </section>
   <p class="tiny">Based on the “That’s Next Level!” activity in Math Medic, Geometry Lesson 3.1. This is an independent interactive adaptation for classroom use.</p>
   <div class="sr-only" id="live" role="status" aria-live="polite"></div>
 </main>
