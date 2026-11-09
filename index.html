@@ -95,83 +95,92 @@
 </main>
 <script>
 (() => {
-  'use strict';
-  const $ = id => document.getElementById(id);
-  const STORAGE_KEY = 'thats-next-level-v1';
-  // Coordinates: x increases to the right, y increases down the page.
-  // Orientation is a 2x2 matrix [a,b,c,d] in SVG's matrix(a b c d ...) convention.
-  // The target flag is located at (3,2) with the pole facing right and banner down.
-  const INITIAL = {x:0, y:4, matrix:[1,0,0,1], history:[], question:0};
-  let state = structuredClone(INITIAL);
-  const moves = {
-    up:     {label:'Shift up 1',kind:'shift',dx:0,dy:-1},
-    down:   {label:'Shift down 1',kind:'shift',dx:0,dy:1},
-    left:   {label:'Shift left 1',kind:'shift',dx:-1,dy:0},
-    right:  {label:'Shift right 1',kind:'shift',dx:1,dy:0},
-    rotate: {label:'Rotate 90° counterclockwise',kind:'transform',matrix:[0,-1,1,0]},
-    flipv:  {label:'Flip vertically',kind:'transform',matrix:[-1,0,0,1]},
-    fliph:  {label:'Flip horizontally',kind:'transform',matrix:[1,0,0,-1]}
-  };
-  const questions = [
-    'Can you get the flags to match? Keep track of how many moves you use.',
-    'Describe your sequence of transformations using precise mathematical vocabulary.',
-    'Can you find a different sequence that reaches exactly the same position and orientation?',
-    'Which sequence uses the fewest moves? How could you prove it?',
-    'Can the target orientation be created with either a horizontal flip or a vertical flip? Explain.'
-  ];
-  function multiply(a,b){return [a[0]*b[0]+a[2]*b[1],a[1]*b[0]+a[3]*b[1],a[0]*b[2]+a[2]*b[3],a[1]*b[2]+a[3]*b[3]];}
-  function atGoal(){return state.x===3&&state.y===2&&state.matrix.every((v,i)=>v===[0,1,1,0][i]);}
-  function persist(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}catch{}}
-  function load(){try{let s=JSON.parse(localStorage.getItem(STORAGE_KEY));if(s&&Number.isInteger(s.x)&&s.x>=0&&s.x<=4&&Number.isInteger(s.y)&&s.y>=0&&s.y<=4&&Array.isArray(s.matrix)&&s.matrix.length===4&&s.matrix.every(v=>[-1,0,1].includes(v))&&Array.isArray(s.history)&&s.history.length<=500&&s.history.every(k=>Object.hasOwn(moves,k))){state={x:s.x,y:s.y,matrix:s.matrix,history:s.history,question:Number.isInteger(s.question)&&s.question>=0&&s.question<questions.length?s.question:0};}}catch{}}
-  function rebuild(){
-    // Recompute history from the start so a manually edited saved state cannot falsify the result.
-    const prior=[...state.history];state.x=0;state.y=4;state.matrix=[1,0,0,1];state.history=[];
-    for(const k of prior)apply(k,false);
-  }
-  function apply(key,renderAfter=true){
-    const op=moves[key]; if(!op)return;
-    if(op.kind==='shift'){
-      let nx=state.x+op.dx,ny=state.y+op.dy;
-      if(nx<0||nx>4||ny<0||ny>4)return;
-      state.x=nx;state.y=ny;
-    }else{state.matrix=multiply(op.matrix,state.matrix);}
-    state.history.push(key);
-    if(renderAfter){persist();render();}
-  }
-  function undo(){if(!state.history.length)return;state.history.pop();rebuild();persist();render();}
-  function reset(){state=structuredClone(INITIAL);persist();render();}
-  function render(){
-    const {x,y,matrix,history}=state;
-    $('player-flag').setAttribute('transform',`translate(${60+x*80} ${68+y*80}) matrix(${matrix.join(' ')} 0 0)`);
-    const shiftCount=history.filter(k=>moves[k].kind==='shift').length;
-    $('total').textContent=history.length;$('shifts').textContent=shiftCount;$('transforms').textContent=history.length-shiftCount;
-    const historyList=$('history');historyList.replaceChildren();
-    if(!history.length){const d=document.createElement('div');d.className='empty';d.textContent='Your moves will appear here.';historyList.appendChild(d);}
-    history.forEach((k,i)=>{const row=document.createElement('div');row.className='history-row';const n=document.createElement('b');n.textContent=`${i+1}.`;const label=document.createElement('span');label.textContent=moves[k].label;row.append(n,label);historyList.appendChild(row);});
-    historyList.scrollTop=historyList.scrollHeight;
-    $('undo').disabled=$('copy').disabled=!history.length;
-    for(const k of ['up','down','left','right'])$(''+k).disabled=x+moves[k].dx<0||x+moves[k].dx>4||y+moves[k].dy<0||y+moves[k].dy>4;
-    const won=atGoal();$('success').hidden=!won;
-    $('status').textContent=won?'✓ Level complete':x===3&&y===2?'Check the orientation':'Level 1 · In progress';
-    if(won){$('success-text').textContent=`You matched the target in ${history.length} moves: ${shiftCount} shifts and ${history.length-shiftCount} rotations/reflections. Can you find another sequence?`;$('live').textContent=`Level complete in ${history.length} moves.`;}
-    $('question').textContent=questions[state.question];
-  }
-  async function copyHistory(){
-    const summary=`That's Next Level! — ${state.history.length} moves\n`+state.history.map((k,i)=>`${i+1}. ${moves[k].label}`).join('\n');
-    try{await navigator.clipboard.writeText(summary);const btn=$('copy');btn.textContent='Copied!';setTimeout(()=>{btn.textContent='Copy moves';},1500);}
-    catch{window.prompt('Copy your moves:',summary);}
-  }
-  load();rebuild();
-  for(const k of Object.keys(moves))$(k).addEventListener('click',()=>apply(k));
-  $('undo').addEventListener('click',undo);$('reset').addEventListener('click',reset);$('retry').addEventListener('click',reset);
-  $('copy').addEventListener('click',copyHistory);
-  $('next-question').addEventListener('click',()=>{state.question=(state.question+1)%questions.length;persist();render();});
-  window.addEventListener('keydown',e=>{
-    if(e.altKey||e.ctrlKey||e.metaKey||e.repeat)return;
-    const keyMap={ArrowUp:'up',ArrowDown:'down',ArrowLeft:'left',ArrowRight:'right'};
-    if(keyMap[e.key]&&!['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)){e.preventDefault();apply(keyMap[e.key]);}
-  });
-  render();
+'use strict';
+const $=id=>document.getElementById(id);
+const KEY='thats-next-level-v2', ID=[1,0,0,1], DIAG=[0,1,1,0];
+const levels=[
+ {x:3,y:2,m:DIAG,description:'Original worksheet target: match both location and orientation.'},
+ {x:4,y:2,m:DIAG,description:'Move one square farther and match the reflected flag.'},
+ {x:3,y:0,m:DIAG,description:'Reach the top row while matching the reflected orientation.'},
+ {x:4,y:0,m:[0,-1,1,0],description:'Reach the opposite corner with a 90° counterclockwise rotation.'},
+ {x:4,y:0,m:DIAG,description:'Final challenge: reach the opposite corner and make a diagonal reflection.'}
+];
+const ops={
+ up:{label:'Shift up 1',dx:0,dy:-1},down:{label:'Shift down 1',dx:0,dy:1},
+ left:{label:'Shift left 1',dx:-1,dy:0},right:{label:'Shift right 1',dx:1,dy:0},
+ rotate:{label:'Rotate 90° counterclockwise',m:[0,-1,1,0]},
+ flipv:{label:'Flip vertically',m:[-1,0,0,1]},fliph:{label:'Flip horizontally',m:[1,0,0,-1]}
+};
+let state={level:0,unlocked:0,completed:[],history:[],x:0,y:4,m:[...ID]};
+function multiply(a,b){return [a[0]*b[0]+a[2]*b[1],a[1]*b[0]+a[3]*b[1],a[0]*b[2]+a[2]*b[3],a[1]*b[2]+a[3]*b[3]];}
+function match(){const t=levels[state.level];return state.x===t.x&&state.y===t.y&&state.m.every((v,i)=>v===t.m[i]);}
+function save(){try{localStorage.setItem(KEY,JSON.stringify({level:state.level,unlocked:state.unlocked,completed:state.completed,history:state.history}));}catch{}}
+function replay(){const h=[...state.history];state.x=0;state.y=4;state.m=[...ID];state.history=[];h.forEach(k=>apply(k,false));}
+function load(){
+ try{const s=JSON.parse(localStorage.getItem(KEY));if(!s||!Number.isInteger(s.level))return;
+ const unlocked=Number.isInteger(s.unlocked)?Math.max(0,Math.min(4,s.unlocked)):0;
+ state.level=Math.max(0,Math.min(unlocked,s.level));state.unlocked=unlocked;
+ state.completed=Array.isArray(s.completed)?[...new Set(s.completed.filter(n=>Number.isInteger(n)&&n>=0&&n<5))]:[];
+ state.history=Array.isArray(s.history)&&s.history.length<=1000&&s.history.every(k=>Object.hasOwn(ops,k))?s.history:[];replay();
+ }catch{}
+}
+function progress(){if(match()&&!state.completed.includes(state.level)){state.completed.push(state.level);state.unlocked=Math.max(state.unlocked,Math.min(4,state.level+1));}}
+function apply(k,draw=true){
+ const op=ops[k];if(!op)return;
+ if(op.m){state.m=multiply(op.m,state.m);}
+ else{const nx=state.x+op.dx,ny=state.y+op.dy;if(nx<0||nx>4||ny<0||ny>4)return;state.x=nx;state.y=ny;}
+ state.history.push(k);if(draw){progress();save();render();}
+}
+function startLevel(n){if(n<0||n>state.unlocked||n>4)return;state.level=n;state.history=[];state.x=0;state.y=4;state.m=[...ID];save();render();}
+function undo(){if(!state.history.length)return;state.history.pop();replay();save();render();}
+function reset(){startLevel(state.level);}
+function renderLevels(){
+ const box=$('level-list');box.replaceChildren();
+ levels.forEach((level,i)=>{
+  const b=document.createElement('button');b.className='level-button';
+  if(i===state.level)b.classList.add('current');
+  if(state.completed.includes(i))b.classList.add('finished');
+  b.disabled=i>state.unlocked;
+  b.textContent=(state.completed.includes(i)?'✓ ':'')+'Level '+(i+1)+(i>state.unlocked?' 🔒':'');
+  b.setAttribute('aria-current',i===state.level?'step':'false');
+  b.addEventListener('click',()=>startLevel(i));box.appendChild(b);
+ });
+ $('progress').textContent=state.completed.length+' of 5 completed';
+ $('level-info').textContent=levels[state.level].description;
+}
+function render(){
+ const t=levels[state.level],h=state.history;
+ renderLevels();
+ $('target-flag').setAttribute('transform','translate('+(60+80*t.x)+' '+(68+80*t.y)+') matrix('+t.m.join(' ')+' 0 0)');
+ $('target-cell').setAttribute('x',22+80*t.x);$('target-cell').setAttribute('y',30+80*t.y);
+ $('target-label').setAttribute('x',60+80*t.x);
+ $('target-label').textContent='TARGET';
+ $('board').setAttribute('aria-label','Five by five grid. Target column '+(t.x+1)+', row '+(t.y+1)+' from top.');
+ $('player-flag').setAttribute('transform','translate('+(60+80*state.x)+' '+(68+80*state.y)+') matrix('+state.m.join(' ')+' 0 0)');
+ const shifts=h.filter(k=>!ops[k].m).length;
+ $('total').textContent=h.length;$('shifts').textContent=shifts;$('transforms').textContent=h.length-shifts;
+ const history=$('history');history.replaceChildren();
+ if(!h.length){const d=document.createElement('div');d.className='empty';d.textContent='Your moves will appear here.';history.appendChild(d);}
+ h.forEach((k,i)=>{const d=document.createElement('div');d.className='history-row';const n=document.createElement('b');n.textContent=(i+1)+'.';const v=document.createElement('span');v.textContent=ops[k].label;d.append(n,v);history.appendChild(d);});
+ history.scrollTop=history.scrollHeight;
+ $('undo').disabled=$('copy').disabled=!h.length;
+ ['up','down','left','right'].forEach(k=>{const op=ops[k];$(k).disabled=state.x+op.dx<0||state.x+op.dx>4||state.y+op.dy<0||state.y+op.dy>4;});
+ const won=match();$('success').hidden=!won;
+ $('status').textContent=won?'✓ Level '+(state.level+1)+' complete':state.x===t.x&&state.y===t.y?'Match the orientation':'Level '+(state.level+1)+' of 5';
+ $('next-level').hidden=!won||state.level===4;
+ if(won){$('success-text').textContent=(state.level===4?'All five levels complete! ':'')+'Solved in '+h.length+' moves ('+shifts+' shifts, '+(h.length-shifts)+' rotations/reflections).';$('live').textContent='Level '+(state.level+1)+' complete.';}
+}
+async function copy(){
+ const str="That's Next Level! — Level "+(state.level+1)+' — '+state.history.length+' moves\n'+state.history.map((k,i)=>(i+1)+'. '+ops[k].label).join('\n');
+ try{await navigator.clipboard.writeText(str);$('copy').textContent='Copied!';setTimeout(()=>$('copy').textContent='Copy moves',1500);}catch{window.prompt('Copy moves:',str);}
+}
+load();progress();save();Object.keys(ops).forEach(k=>$(k).addEventListener('click',()=>apply(k)));
+$('undo').addEventListener('click',undo);$('reset').addEventListener('click',reset);$('retry').addEventListener('click',reset);
+$('next-level').addEventListener('click',()=>startLevel(state.level+1));$('copy').addEventListener('click',copy);
+window.addEventListener('keydown',e=>{if(e.altKey||e.ctrlKey||e.metaKey||e.repeat||['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName))return;
+ const k={ArrowUp:'up',ArrowDown:'down',ArrowLeft:'left',ArrowRight:'right'}[e.key];if(k){e.preventDefault();apply(k);}
+});
+render();
 })();
 </script>
 </body>
