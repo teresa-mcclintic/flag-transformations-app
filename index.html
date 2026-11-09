@@ -97,13 +97,13 @@
 (() => {
 'use strict';
 const $=id=>document.getElementById(id);
-const KEY='thats-next-level-v2', ID=[1,0,0,1], DIAG=[0,1,1,0];
+const KEY='thats-next-level-v3', ID=[1,0,0,1], DIAG=[0,1,1,0];
 const levels=[
- {x:3,y:2,m:DIAG,description:'Original worksheet target: match both location and orientation.'},
- {x:4,y:2,m:DIAG,description:'Move one square farther and match the reflected flag.'},
- {x:3,y:0,m:DIAG,description:'Reach the top row while matching the reflected orientation.'},
- {x:4,y:0,m:[0,-1,1,0],description:'Reach the opposite corner with a 90° counterclockwise rotation.'},
- {x:4,y:0,m:DIAG,description:'Final challenge: reach the opposite corner and make a diagonal reflection.'}
+ {x:3,y:2,m:DIAG,description:'Original worksheet challenge: match both the location and orientation.'},
+ {x:4,y:1,m:[-1,0,0,1],description:'Left-facing flag: reflect across a vertical line and move to the target.'},
+ {x:3,y:0,m:[1,0,0,-1],description:'Upside-down flag: reflect across a horizontal line to match the target.'},
+ {x:4,y:1,m:[0,-1,-1,0],description:'Sideways flag: combine two orientation transformations to match the target.'},
+ {x:4,y:0,m:[-1,0,0,-1],description:'Final challenge: turn the flag completely around (180°) and reach the far corner.'}
 ];
 const ops={
  up:{label:'Shift up 1',dx:0,dy:-1},down:{label:'Shift down 1',dx:0,dy:1},
