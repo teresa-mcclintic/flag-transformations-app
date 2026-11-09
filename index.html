@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f5f6f8" />
+  <title>That's Next Level! — Geometry Transformations</title>
+  <style>
+    :root {font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color:#263345; background:#f5f6f8; font-synthesis:none;}
+    *{box-sizing:border-box} body{margin:0;padding:24px 16px 50px} button{font:inherit;cursor:pointer} button:focus-visible{outline:3px solid #5289ec;outline-offset:3px}
+    .container{max-width:1140px;margin:auto} .header{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;margin-bottom:22px}
+    h1{font-size:clamp(24px,3.3vw,34px);margin:0;letter-spacing:-.04em} h2{font-size:17px;margin:0 0 12px} .muted{color:#657487}.subtitle{margin:7px 0 0;font-size:14px}
+    .pill{background:#edf2fb;color:#345b90;padding:9px 15px;border-radius:999px;font-size:13px;font-weight:700}
+    .stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:14px}.stat{background:white;border:1px solid #e3e8ef;border-radius:13px;padding:15px 16px;text-align:center}.stat strong{font-size:27px;display:block;margin-top:3px;font-variant-numeric:tabular-nums}.stat span{color:#657487;font-size:13px}
+    .layout{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(310px,.85fr);gap:14px;align-items:start}.card{border:1px solid #e1e6ed;background:white;border-radius:15px;padding:18px;box-shadow:0 2px 7px #20304706}.board-svg{width:100%;height:auto;display:block;max-width:570px;margin:0 auto}.legend{display:flex;justify-content:center;gap:24px;font-size:13px;color:#627286;margin-top:7px;flex-wrap:wrap}.swatch{width:12px;height:12px;background:#f5a65c;border:1px solid #cc853f;display:inline-block;border-radius:3px;margin-right:6px}.swatch.target{opacity:.55}
+    .side{display:grid;gap:14px}.help{font-size:13px;color:#657487;margin:-5px 0 14px;line-height:1.5}.arrows{display:grid;grid-template-columns:repeat(3,62px);grid-template-rows:repeat(2,52px);gap:7px;justify-content:center;margin:7px auto 19px}.arrows .up{grid-column:2}.arrows .left{grid-column:1;grid-row:2}.arrows .down{grid-column:2;grid-row:2}.arrows .right{grid-column:3;grid-row:2}
+    .btn{border:1px solid #dce3ec;background:#f9fafc;color:#263345;border-radius:10px;padding:10px 13px;font-weight:650;min-height:46px;transition:background .14s ease}.btn:hover:not(:disabled){background:#eaf0f8}.btn:disabled{opacity:.36;cursor:not-allowed}.arrow{font-size:23px;padding:0}.transform-buttons{display:grid;gap:8px}.transform-buttons .btn{text-align:left}.footer-controls{display:flex;gap:8px;flex-wrap:wrap}.footer-controls .btn{flex:1}.history{overflow:auto;max-height:242px;min-height:49px;display:flex;flex-direction:column;gap:6px;scrollbar-width:thin}.history-row{padding:9px 11px;border-radius:8px;background:#f4f6f9;font-size:13px;display:flex;gap:9px}.history-row b{color:#657487;min-width:23px}.empty{color:#7b8897;font-size:13px;padding:10px 2px}.success{background:#eaf7f0;border:1px solid #a1d7bc;border-radius:12px;padding:16px;line-height:1.55;margin-top:14px}.success strong{color:#187146}.success[hidden]{display:none}.discussion{margin-top:14px}.discussion p{font-size:14px;line-height:1.55;margin:0 0 14px}.secondary{color:#365f91}.tiny{font-size:12px;color:#7a8796;line-height:1.55}.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+    @media(max-width:800px){.layout{grid-template-columns:1fr}.side{grid-template-columns:repeat(2,minmax(0,1fr))}.move-card{grid-column:1 / -1}.history-card{grid-column:1 / -1}}@media(max-width:570px){body{padding:15px 10px 30px}.stats{gap:7px}.stat{padding:12px 7px}.stat strong{font-size:24px}.stat span{font-size:12px}.card{padding:13px}.side{grid-template-columns:1fr}.pill{font-size:12px}.arrows{grid-template-columns:repeat(3,70px)}.header{margin-bottom:14px}}
+    @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+    @media print{.side,.discussion,.stats,.pill{display:none!important}.layout{display:block}.card{box-shadow:none;border:0}}
+  </style>
+</head>
+<body>
+<main class="container">
+  <header class="header">
+    <div><h1>That's Next Level!</h1><p class="subtitle muted">Introduction to Transformations · Interactive Geometry</p></div>
+    <div id="status" class="pill">Level 1 · In progress</div>
+  </header>
+  <section class="stats" aria-label="Move statistics">
+    <div class="stat"><span>Total moves</span><strong id="total">0</strong></div>
+    <div class="stat"><span>Shifts</span><strong id="shifts">0</strong></div>
+    <div class="stat"><span>Rotations / Flips</span><strong id="transforms">0</strong></div>
+  </section>
+  <div class="layout">
+    <section class="card" aria-label="Transformation grid">
+      <svg id="board" class="board-svg" viewBox="0 0 440 474" role="img" aria-label="A five by five grid. The flag starts at bottom left and the target is at column four, row three.">
+        <text x="14" y="16" fill="#657487" font-size="12">Move the orange flag to match the target.</text>
+        <rect x="20" y="28" width="400" height="400" fill="#f8fafc" stroke="#718096" stroke-width="1.5"/>
+        <path d="M100 28V428 M180 28V428 M260 28V428 M340 28V428 M20 108H420 M20 188H420 M20 268H420 M20 348H420" fill="none" stroke="#aeb7c2" stroke-width="1"/>
+        <rect x="262" y="190" width="76" height="76" rx="4" fill="#f5d4ab" fill-opacity=".35" stroke="#ddaf75" stroke-dasharray="5 4"/>
+        <g id="target-flag" transform="translate(300 228) matrix(0 1 1 0 0 0)" opacity=".48">
+          <path d="M0 -29V30" stroke="#986940" stroke-width="3.5" stroke-linecap="round"/>
+          <path d="M0 -26L27 -26L34 -16L26 -6L0 -6Z" fill="#e8a76e" stroke="#be8454" stroke-width="1.5" stroke-linejoin="round"/>
+          <circle cx="0" cy="-28" r="3" fill="#986940"/>
+        </g>
+        <g id="player-flag" transform="translate(60 388) matrix(1 0 0 1 0 0)">
+          <path d="M0 -29V30" stroke="#456b81" stroke-width="3.6" stroke-linecap="round"/>
+          <path d="M0 -26L27 -26L34 -16L26 -6L0 -6Z" fill="#f5a65c" stroke="#d17a36" stroke-width="1.5" stroke-linejoin="round"/>
+          <path d="M4 -24L23 -24L29 -16L24 -10L4 -10Z" fill="#ffd09a" opacity=".6"/>
+          <circle cx="0" cy="-28" r="3" fill="#456b81"/>
+        </g>
+        <text x="60" y="451" text-anchor="middle" fill="#657487" font-weight="650" font-size="12">START</text>
+        <text x="300" y="451" text-anchor="middle" fill="#657487" font-weight="650" font-size="12">TARGET: column 4</text>
+      </svg>
+      <div class="legend"><span><i class="swatch"></i>Your flag</span><span><i class="swatch target"></i>Target flag</span></div>
+      <div id="success" class="success" hidden>
+        <strong>✓ Level complete!</strong><div id="success-text"></div>
+        <button id="retry" class="btn" style="margin-top:12px;width:100%">Try a different sequence</button>
+      </div>
+    </section>
+    <div class="side">
+      <section class="card move-card">
+        <h2>1. Shift the flag</h2>
+        <p class="help">Each arrow moves the flag one square. You can also use the arrow keys on your keyboard.</p>
+        <div class="arrows">
+          <button id="up" class="btn arrow up" aria-label="Shift up one square" title="Shift up">↑</button>
+          <button id="left" class="btn arrow left" aria-label="Shift left one square" title="Shift left">←</button>
+          <button id="down" class="btn arrow down" aria-label="Shift down one square" title="Shift down">↓</button>
+          <button id="right" class="btn arrow right" aria-label="Shift right one square" title="Shift right">→</button>
+        </div>
+        <h2>2. Transform the flag</h2>
+        <p class="help">Rotations and reflections change the flag's orientation but not its grid square.</p>
+        <div class="transform-buttons">
+          <button id="rotate" class="btn">↺ &nbsp; Rotate 90° counterclockwise</button>
+          <button id="flipv" class="btn">↔ &nbsp; Flip vertically (left–right)</button>
+          <button id="fliph" class="btn">↕ &nbsp; Flip horizontally (up–down)</button>
+        </div>
+        <p class="tiny">Vertical flip = reflection across a vertical line. Horizontal flip = reflection across a horizontal line.</p>
+      </section>
+      <section class="card history-card">
+        <h2>Move history</h2>
+        <div id="history" class="history" aria-live="polite"><div class="empty">Your moves will appear here.</div></div>
+        <div class="footer-controls" style="margin-top:13px">
+          <button id="undo" class="btn" disabled>↶ Undo</button>
+          <button id="reset" class="btn">Reset</button>
+          <button id="copy" class="btn" disabled>Copy moves</button>
+        </div>
+      </section>
+    </div>
+  </div>
+  <section class="card discussion">
+    <h2>Think like a mathematician</h2>
+    <p id="question">Can you get the flags to match? Keep track of how many moves you use.</p>
+    <button id="next-question" class="btn secondary">Next discussion question →</button>
+  </section>
+  <p class="tiny">Based on the “That’s Next Level!” activity in Math Medic, Geometry Lesson 3.1. This is an independent interactive adaptation for classroom use.</p>
+  <div class="sr-only" id="live" role="status" aria-live="polite"></div>
+</main>
+<script>
+(() => {
+  'use strict';
+  const $ = id => document.getElementById(id);
+  const STORAGE_KEY = 'thats-next-level-v1';
+  // Coordinates: x increases to the right, y increases down the page.
+  // Orientation is a 2x2 matrix [a,b,c,d] in SVG's matrix(a b c d ...) convention.
+  // The target flag is located at (3,2) with the pole facing right and banner down.
+  const INITIAL = {x:0, y:4, matrix:[1,0,0,1], history:[], question:0};
+  let state = structuredClone(INITIAL);
+  const moves = {
+    up:     {label:'Shift up 1',kind:'shift',dx:0,dy:-1},
+    down:   {label:'Shift down 1',kind:'shift',dx:0,dy:1},
+    left:   {label:'Shift left 1',kind:'shift',dx:-1,dy:0},
+    right:  {label:'Shift right 1',kind:'shift',dx:1,dy:0},
+    rotate: {label:'Rotate 90° counterclockwise',kind:'transform',matrix:[0,-1,1,0]},
+    flipv:  {label:'Flip vertically',kind:'transform',matrix:[-1,0,0,1]},
+    fliph:  {label:'Flip horizontally',kind:'transform',matrix:[1,0,0,-1]}
+  };
+  const questions = [
+    'Can you get the flags to match? Keep track of how many moves you use.',
+    'Describe your sequence of transformations using precise mathematical vocabulary.',
+    'Can you find a different sequence that reaches exactly the same position and orientation?',
+    'Which sequence uses the fewest moves? How could you prove it?',
+    'Can the target orientation be created with either a horizontal flip or a vertical flip? Explain.'
+  ];
+  function multiply(a,b){return [a[0]*b[0]+a[2]*b[1],a[1]*b[0]+a[3]*b[1],a[0]*b[2]+a[2]*b[3],a[1]*b[2]+a[3]*b[3]];}
+  function atGoal(){return state.x===3&&state.y===2&&state.matrix.every((v,i)=>v===[0,1,1,0][i]);}
+  function persist(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}catch{}}
+  function load(){try{let s=JSON.parse(localStorage.getItem(STORAGE_KEY));if(s&&Number.isInteger(s.x)&&s.x>=0&&s.x<=4&&Number.isInteger(s.y)&&s.y>=0&&s.y<=4&&Array.isArray(s.matrix)&&s.matrix.length===4&&s.matrix.every(v=>[-1,0,1].includes(v))&&Array.isArray(s.history)&&s.history.length<=500&&s.history.every(k=>Object.hasOwn(moves,k))){state={x:s.x,y:s.y,matrix:s.matrix,history:s.history,question:Number.isInteger(s.question)&&s.question>=0&&s.question<questions.length?s.question:0};}}catch{}}
+  function rebuild(){
+    // Recompute history from the start so a manually edited saved state cannot falsify the result.
+    const prior=[...state.history];state.x=0;state.y=4;state.matrix=[1,0,0,1];state.history=[];
+    for(const k of prior)apply(k,false);
+  }
+  function apply(key,renderAfter=true){
+    const op=moves[key]; if(!op)return;
+    if(op.kind==='shift'){
+      let nx=state.x+op.dx,ny=state.y+op.dy;
+      if(nx<0||nx>4||ny<0||ny>4)return;
+      state.x=nx;state.y=ny;
+    }else{state.matrix=multiply(op.matrix,state.matrix);}
+    state.history.push(key);
+    if(renderAfter){persist();render();}
+  }
+  function undo(){if(!state.history.length)return;state.history.pop();rebuild();persist();render();}
+  function reset(){state=structuredClone(INITIAL);persist();render();}
+  function render(){
+    const {x,y,matrix,history}=state;
+    $('player-flag').setAttribute('transform',`translate(${60+x*80} ${68+y*80}) matrix(${matrix.join(' ')} 0 0)`);
+    const shiftCount=history.filter(k=>moves[k].kind==='shift').length;
+    $('total').textContent=history.length;$('shifts').textContent=shiftCount;$('transforms').textContent=history.length-shiftCount;
+    const historyList=$('history');historyList.replaceChildren();
+    if(!history.length){const d=document.createElement('div');d.className='empty';d.textContent='Your moves will appear here.';historyList.appendChild(d);}
+    history.forEach((k,i)=>{const row=document.createElement('div');row.className='history-row';const n=document.createElement('b');n.textContent=`${i+1}.`;const label=document.createElement('span');label.textContent=moves[k].label;row.append(n,label);historyList.appendChild(row);});
+    historyList.scrollTop=historyList.scrollHeight;
+    $('undo').disabled=$('copy').disabled=!history.length;
+    for(const k of ['up','down','left','right'])$(''+k).disabled=x+moves[k].dx<0||x+moves[k].dx>4||y+moves[k].dy<0||y+moves[k].dy>4;
+    const won=atGoal();$('success').hidden=!won;
+    $('status').textContent=won?'✓ Level complete':x===3&&y===2?'Check the orientation':'Level 1 · In progress';
+    if(won){$('success-text').textContent=`You matched the target in ${history.length} moves: ${shiftCount} shifts and ${history.length-shiftCount} rotations/reflections. Can you find another sequence?`;$('live').textContent=`Level complete in ${history.length} moves.`;}
+    $('question').textContent=questions[state.question];
+  }
+  async function copyHistory(){
+    const summary=`That's Next Level! — ${state.history.length} moves\n`+state.history.map((k,i)=>`${i+1}. ${moves[k].label}`).join('\n');
+    try{await navigator.clipboard.writeText(summary);const btn=$('copy');btn.textContent='Copied!';setTimeout(()=>{btn.textContent='Copy moves';},1500);}
+    catch{window.prompt('Copy your moves:',summary);}
+  }
+  load();rebuild();
+  for(const k of Object.keys(moves))$(k).addEventListener('click',()=>apply(k));
+  $('undo').addEventListener('click',undo);$('reset').addEventListener('click',reset);$('retry').addEventListener('click',reset);
+  $('copy').addEventListener('click',copyHistory);
+  $('next-question').addEventListener('click',()=>{state.question=(state.question+1)%questions.length;persist();render();});
+  window.addEventListener('keydown',e=>{
+    if(e.altKey||e.ctrlKey||e.metaKey||e.repeat)return;
+    const keyMap={ArrowUp:'up',ArrowDown:'down',ArrowLeft:'left',ArrowRight:'right'};
+    if(keyMap[e.key]&&!['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)){e.preventDefault();apply(keyMap[e.key]);}
+  });
+  render();
+})();
+</script>
+</body>
+</html>
