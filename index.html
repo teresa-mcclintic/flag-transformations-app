@@ -19,7 +19,7 @@
     @media(prefers-reduced-motion:reduce){*{transition:none!important}}
     @media print{.side,.discussion,.stats,.pill{display:none!important}.layout{display:block}.card{box-shadow:none;border:0}}
   .level-nav{border:1px solid #e1e6ed;background:#fff;padding:15px;border-radius:14px;margin-bottom:14px}.level-list{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.level-button{min-height:49px;border-radius:10px;background:#f4f7fb;border:2px solid #cbd8e7;color:#285277;font-weight:700}.level-button.current{background:#e2f0ff;border-color:#3272b4}.level-button.finished{border-color:#499b74;background:#eef8f2}.level-button:disabled{opacity:.4;cursor:not-allowed}.level-info{font-size:13px;color:#657487;margin:10px 0 0}.arrows{grid-template-columns:repeat(3,80px);grid-template-rows:repeat(2,70px);gap:9px}.arrow{font-size:29px;min-height:70px;background:#e6f2ff;border:2px solid #3574ba;color:#1d5792;box-shadow:0 3px 0 #abc9e4}.arrow:hover:not(:disabled){background:#cde6ff}.arrow:active:not(:disabled){transform:translateY(2px);box-shadow:0 1px 0 #abc9e4}.arrow small{display:block;font-size:11px;letter-spacing:.03em}.move-label{text-align:center;font-size:12px;font-weight:750;color:#2d6095;margin:0 0 12px}.next-level{margin-top:12px;width:100%;background:#276da9;color:#fff;border-color:#276da9}.next-level:hover:not(:disabled){background:#15548a}@media(max-width:570px){.level-list{gap:5px}.level-button{font-size:12px}.arrows{grid-template-columns:repeat(3,75px)}}
-</style>
+.transform-buttons{display:grid;gap:11px;margin-top:12px}.transform-buttons .transform-btn{display:flex;align-items:center;gap:15px;width:100%;min-height:78px;text-align:left;padding:12px 15px;border-radius:13px;border:2px solid #6d92be;background:#eaf3ff;color:#183e69;box-shadow:0 3px 0 #b0c7df;cursor:pointer}.transform-buttons .transform-btn:hover:not(:disabled){background:#d3e8ff;border-color:#356da6}.transform-buttons .transform-btn:active:not(:disabled){transform:translateY(2px);box-shadow:0 1px 0 #b0c7df}.transform-buttons .transform-btn:focus-visible{outline:3px solid #eea848;outline-offset:2px}.transform-icon{display:grid;place-items:center;flex:0 0 54px;width:54px;height:54px;border-radius:11px;background:#fff;border:1px solid #bed2e7;color:#23619d}.transform-copy{display:flex;flex-direction:column;gap:4px;line-height:1.2}.transform-copy strong{font-size:16px;font-weight:800}.transform-copy small{font-size:12px;color:#456b94;font-weight:600}@media(max-width:570px){.transform-buttons .transform-btn{min-height:75px}}</style>
 </head>
 <body>
 <main class="container">
@@ -72,10 +72,19 @@
         </div>
         <h2>2. Transform the flag</h2>
         <p class="help">Rotations and reflections change the flag's orientation but not its grid square.</p>
-        <div class="transform-buttons">
-          <button id="rotate" class="btn">↺ &nbsp; Rotate 90° counterclockwise</button>
-          <button id="flipv" class="btn">↔ &nbsp; Flip vertically (left–right)</button>
-          <button id="fliph" class="btn">↕ &nbsp; Flip horizontally (up–down)</button>
+        <div class="transform-buttons" aria-label="Flag transformations">
+          <button id="rotate" class="btn transform-btn" title="Rotate the flag 90 degrees counterclockwise in its square">
+            <span class="transform-icon" aria-hidden="true"><svg viewBox="0 0 48 48" width="42" height="42"><path d="M12 19 A15 15 0 1 1 13 33" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round"/><path d="M7 9 L12 21 L24 16" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round"/></svg></span>
+            <span class="transform-copy"><strong>Rotate 90° CCW</strong><small>Quarter-turn counterclockwise</small></span>
+          </button>
+          <button id="flipv" class="btn transform-btn" title="Reflect the flag across a vertical line in its square">
+            <span class="transform-icon" aria-hidden="true"><svg viewBox="0 0 48 48" width="42" height="42"><path d="M24 4 V44" stroke="currentColor" stroke-width="2.4" stroke-dasharray="4 4" opacity=".75"/><path d="M18 14 L8 24 L18 34 M30 14 L40 24 L30 34" fill="none" stroke="currentColor" stroke-width="3.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="transform-copy"><strong>Vertical Flip</strong><small>Reflect left ↔ right</small></span>
+          </button>
+          <button id="fliph" class="btn transform-btn" title="Reflect the flag across a horizontal line in its square">
+            <span class="transform-icon" aria-hidden="true"><svg viewBox="0 0 48 48" width="42" height="42"><path d="M4 24 H44" stroke="currentColor" stroke-width="2.4" stroke-dasharray="4 4" opacity=".75"/><path d="M14 18 L24 8 L34 18 M14 30 L24 40 L34 30" fill="none" stroke="currentColor" stroke-width="3.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="transform-copy"><strong>Horizontal Flip</strong><small>Reflect up ↕ down</small></span>
+          </button>
         </div>
         <p class="tiny">Vertical flip = reflection across a vertical line. Horizontal flip = reflection across a horizontal line.</p>
       </section>
