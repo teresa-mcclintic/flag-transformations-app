@@ -4,30 +4,40 @@ An interactive browser game based on the flag transformation activity in Math Me
 
 ## Play
 
-Live site: https://teresa-mcclintic.github.io/flag-transformations-app/
+**Live game:** https://teresa-mcclintic.github.io/flag-transformations-app/
 
-Open `index.html` locally in a browser or use the GitHub Pages link above.
+The app is a standalone `index.html` with no build step or student login.
 
 ## Five levels
 
-All levels begin with the flag in the bottom-left square of a 5 × 5 grid. Players must match the target's **square and orientation**. The original worksheet target is Level 1; later levels change the destination and target orientation. Complete a level to unlock the next one. Completed levels can be replayed.
+Each challenge starts in the bottom-left square of a 5 × 5 grid. Match both the position and the orientation of the target flag. A level unlocks the next one when solved.
 
-## Controls
+- Move one square with the labeled direction pad or arrow keys.
+- Rotate 90° counterclockwise, reflect across a vertical line, or reflect across a horizontal line.
+- Undo, Reset, and Copy moves.
+- Separate counts for shifts, transformations, and total moves.
 
-- Large, labeled direction pad (or arrow keys): move exactly one square.
-- Rotate 90° counterclockwise: rotate in place.
-- Flip vertically: reflect across a vertical line (left–right reflection).
-- Flip horizontally: reflect across a horizontal line (up–down reflection).
-- Undo, Reset, and Copy moves are available throughout.
-- Total moves, shifts, and orientation changes are counted separately.
-- After success, choose **Next level** or retry the current level.
+## New features
 
-Only valid moves are counted; pressing toward a grid boundary does not count as a move.
+### Minimum moves and personal best
 
-## Privacy and progress
+After completing a level, students see their own number of moves, the **fewest possible moves**, and their **personal best** for that level. The fewest moves are computed from the start to the target based on the allowed moves and flag orientations. The minimum is revealed **after** the level is solved so the challenge remains open-ended.
 
-All progress and move history remain in the browser's `localStorage`. No login, backend, analytics, or student information is required. Clearing site data may reset progress. The game does not submit the worksheet's written answers.
+Personal best scores are saved to the browser using `localStorage`. Replaying a level can improve a student's best score.
 
-## Technology
+### Create Your Own Level
 
-Single-file HTML, CSS and JavaScript. No dependencies, installation, build step, or server are needed.
+Select **Create Your Own Level**, click a grid square to position the target, and use the target-specific rotation and reflection buttons to choose its orientation.
+
+The app computes the shortest solution for the designed target and requires **at least 7 moves** before permitting the challenge to begin.
+
+Use **Copy challenge link** to send the designed challenge to a partner. Opening that link loads the target as a playable custom challenge, requiring no login or backend. Students can also swap the same device and use **Play this challenge**.
+
+A distinct personal-best record is kept for each custom target configuration.
+
+## Notes for teachers
+
+- Completion and best-score records are stored on each browser/device, not collected by the teacher.
+- Clearing site data may erase progress.
+- A custom challenge link contains only the target coordinates and orientation; it contains no student information.
+- This version is an independent interactive adaptation, not an official Math Medic product.
