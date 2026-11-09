@@ -19,7 +19,8 @@
     @media(prefers-reduced-motion:reduce){*{transition:none!important}}
     @media print{.side,.discussion,.stats,.pill{display:none!important}.layout{display:block}.card{box-shadow:none;border:0}}
   .level-nav{border:1px solid #e1e6ed;background:#fff;padding:15px;border-radius:14px;margin-bottom:14px}.level-list{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.level-button{min-height:49px;border-radius:10px;background:#f4f7fb;border:2px solid #cbd8e7;color:#285277;font-weight:700}.level-button.current{background:#e2f0ff;border-color:#3272b4}.level-button.finished{border-color:#499b74;background:#eef8f2}.level-button:disabled{opacity:.4;cursor:not-allowed}.level-info{font-size:13px;color:#657487;margin:10px 0 0}.arrows{grid-template-columns:repeat(3,80px);grid-template-rows:repeat(2,70px);gap:9px}.arrow{font-size:29px;min-height:70px;background:#e6f2ff;border:2px solid #3574ba;color:#1d5792;box-shadow:0 3px 0 #abc9e4}.arrow:hover:not(:disabled){background:#cde6ff}.arrow:active:not(:disabled){transform:translateY(2px);box-shadow:0 1px 0 #abc9e4}.arrow small{display:block;font-size:11px;letter-spacing:.03em}.move-label{text-align:center;font-size:12px;font-weight:750;color:#2d6095;margin:0 0 12px}.next-level{margin-top:12px;width:100%;background:#276da9;color:#fff;border-color:#276da9}.next-level:hover:not(:disabled){background:#15548a}@media(max-width:570px){.level-list{gap:5px}.level-button{font-size:12px}.arrows{grid-template-columns:repeat(3,75px)}}
-.transform-buttons{display:grid;gap:11px;margin-top:12px}.transform-buttons .transform-btn{display:flex;align-items:center;gap:15px;width:100%;min-height:78px;text-align:left;padding:12px 15px;border-radius:13px;border:2px solid #6d92be;background:#eaf3ff;color:#183e69;box-shadow:0 3px 0 #b0c7df;cursor:pointer}.transform-buttons .transform-btn:hover:not(:disabled){background:#d3e8ff;border-color:#356da6}.transform-buttons .transform-btn:active:not(:disabled){transform:translateY(2px);box-shadow:0 1px 0 #b0c7df}.transform-buttons .transform-btn:focus-visible{outline:3px solid #eea848;outline-offset:2px}.transform-icon{display:grid;place-items:center;flex:0 0 54px;width:54px;height:54px;border-radius:11px;background:#fff;border:1px solid #bed2e7;color:#23619d}.transform-copy{display:flex;flex-direction:column;gap:4px;line-height:1.2}.transform-copy strong{font-size:16px;font-weight:800}.transform-copy small{font-size:12px;color:#456b94;font-weight:600}@media(max-width:570px){.transform-buttons .transform-btn{min-height:75px}}</style>
+.transform-buttons{display:grid;gap:11px;margin-top:12px}.transform-buttons .transform-btn{display:flex;align-items:center;gap:15px;width:100%;min-height:78px;text-align:left;padding:12px 15px;border-radius:13px;border:2px solid #6d92be;background:#eaf3ff;color:#183e69;box-shadow:0 3px 0 #b0c7df;cursor:pointer}.transform-buttons .transform-btn:hover:not(:disabled){background:#d3e8ff;border-color:#356da6}.transform-buttons .transform-btn:active:not(:disabled){transform:translateY(2px);box-shadow:0 1px 0 #b0c7df}.transform-buttons .transform-btn:focus-visible{outline:3px solid #eea848;outline-offset:2px}.transform-icon{display:grid;place-items:center;flex:0 0 54px;width:54px;height:54px;border-radius:11px;background:#fff;border:1px solid #bed2e7;color:#23619d}.transform-copy{display:flex;flex-direction:column;gap:4px;line-height:1.2}.transform-copy strong{font-size:16px;font-weight:800}.transform-copy small{font-size:12px;color:#456b94;font-weight:600}@media(max-width:570px){.transform-buttons .transform-btn{min-height:75px}}.level-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}.level-actions .btn{background:#edf5ff;border:2px solid #8ab2d9;color:#24598d}.creator-panel{margin-bottom:15px;border-color:#abc8e6;background:#f5faff}.creator-panel[hidden],#back-levels[hidden],#design-edit[hidden],#next-level[hidden]{display:none!important}.creator-panel p{font-size:14px;line-height:1.5}.creator-buttons{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.creator-buttons .btn{flex:1 1 175px;border:2px solid #aac9e6;background:#fff;color:#235b92}.creator-buttons .creator-start{background:#286eaa;color:white;border-color:#286eaa}.creator-start:disabled{opacity:.4}.creator-summary{background:white;border:1px solid #d6e5f2;padding:10px;border-radius:9px;font-weight:650}.score-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:12px 0}.score-grid>div{background:white;border:1px solid #c5e2d1;padding:10px 5px;border-radius:9px;text-align:center}.score-grid span{display:block;font-size:11px;color:#567269}.score-grid strong{display:block;color:#185e43;font-size:24px}.score-feedback{font-size:13px;margin:8px 0}.best-line{margin-bottom:12px;font-size:13px;font-weight:700;color:#346285}.board-svg.designing #grid-hit{cursor:crosshair}.board-svg.designing{outline:3px solid #8ab6df;outline-offset:2px;border-radius:3px}@media(max-width:570px){.score-grid span{font-size:10px}.creator-buttons{flex-direction:column}}
+</style>
 </head>
 <body>
 <main class="container">
@@ -27,7 +28,20 @@
     <div><h1>That's Next Level!</h1><p class="subtitle muted">Introduction to Transformations · Interactive Geometry</p></div>
     <div id="status" class="pill">Level 1 · In progress</div>
   </header>
-  <section class="level-nav"><div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:10px"><strong>Five challenges</strong><span id="progress" class="muted" style="font-size:13px">0 of 5 completed</span></div><div id="level-list" class="level-list"></div><p class="level-info" id="level-info"></p></section>
+  <section class="level-nav"><div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:10px"><strong>Five challenges</strong><span id="progress" class="muted" style="font-size:13px">0 of 5 completed</span></div><div id="level-list" class="level-list"></div><p class="level-info" id="level-info"></p><div class="level-actions"><button id="make-level" class="btn" type="button">✦ Create Your Own Level</button><button id="back-levels" class="btn" type="button" hidden>← Back to five levels</button></div></section>
+  <section id="creator-panel" class="card creator-panel" hidden aria-label="Create your own challenge">
+    <h2>Create Your Own Level</h2>
+    <p>1. Click any square on the grid to position the target. 2. Use these buttons to change the <strong>target flag's orientation</strong>. 3. Start the challenge when it requires at least 7 moves.</p>
+    <div class="creator-buttons">
+      <button id="design-rotate" class="btn" type="button">↺ Rotate target 90° CCW</button>
+      <button id="design-flipv" class="btn" type="button">↔ Vertical flip target</button>
+      <button id="design-fliph" class="btn" type="button">↕ Horizontal flip target</button>
+    </div>
+    <p class="creator-summary" id="creator-summary"></p>
+    <div class="creator-buttons"><button id="design-start" class="btn creator-start" type="button">Play this challenge</button><button id="design-edit" class="btn" type="button" hidden>Edit target</button></div>
+    <p class="tiny" id="creator-note">Challenge targets must require at least 7 moves to solve.</p>
+  </section>
+  <section class="best-line" aria-live="polite"><span id="best-line">Your best: Not yet completed</span></section>
   <section class="stats" aria-label="Move statistics">
     <div class="stat"><span>Total moves</span><strong id="total">0</strong></div>
     <div class="stat"><span>Shifts</span><strong id="shifts">0</strong></div>
@@ -37,7 +51,7 @@
     <section class="card" aria-label="Transformation grid">
       <svg id="board" class="board-svg" viewBox="0 0 440 474" role="img" aria-label="A five by five grid. The flag starts at bottom left and the target is at column four, row three.">
         <text x="14" y="16" fill="#657487" font-size="12">Move the orange flag to match the target.</text>
-        <rect x="20" y="28" width="400" height="400" fill="#f8fafc" stroke="#718096" stroke-width="1.5"/>
+        <rect id="grid-hit" x="20" y="28" width="400" height="400" fill="#f8fafc" stroke="#718096" stroke-width="1.5"/>
         <path d="M100 28V428 M180 28V428 M260 28V428 M340 28V428 M20 108H420 M20 188H420 M20 268H420 M20 348H420" fill="none" stroke="#aeb7c2" stroke-width="1"/>
         <rect id="target-cell" x="262" y="190" width="76" height="76" rx="4" fill="#f5d4ab" fill-opacity=".35" stroke="#ddaf75" stroke-dasharray="5 4"/>
         <g id="target-flag" transform="translate(300 228) matrix(0 1 1 0 0 0)" opacity=".48">
@@ -56,7 +70,7 @@
       </svg>
       <div class="legend"><span><i class="swatch"></i>Your flag</span><span><i class="swatch target"></i>Target flag</span></div>
       <div id="success" class="success" hidden>
-        <strong>✓ Level complete!</strong><div id="success-text"></div>
+        <strong>✓ Level complete!</strong><div id="success-text"></div><div class="score-grid"><div><span>Your moves</span><strong id="result-moves">—</strong></div><div><span>Fewest possible</span><strong id="result-min">—</strong></div><div><span>Personal best</span><strong id="result-best">—</strong></div></div><p id="result-feedback" class="score-feedback"></p>
         <button id="next-level" class="btn next-level">Next level →</button><button id="retry" class="btn" style="margin-top:8px;width:100%">Try a different sequence</button>
       </div>
     </section>
@@ -120,74 +134,190 @@ const ops={
  rotate:{label:'Rotate 90° counterclockwise',m:[0,-1,1,0]},
  flipv:{label:'Flip vertically',m:[-1,0,0,1]},fliph:{label:'Flip horizontally',m:[1,0,0,-1]}
 };
-let state={level:0,unlocked:0,completed:[],history:[],x:0,y:4,m:[...ID]};
+let state={level:0,unlocked:0,completed:[],history:[],best:{},x:0,y:4,m:[...ID],
+ creator:false,designing:false,custom:{x:4,y:0,m:[-1,0,0,-1]}};
+const same=(a,b)=>a.every((v,i)=>v===b[i]);
 function multiply(a,b){return [a[0]*b[0]+a[2]*b[1],a[1]*b[0]+a[3]*b[1],a[0]*b[2]+a[2]*b[3],a[1]*b[2]+a[3]*b[3]];}
-function match(){const t=levels[state.level];return state.x===t.x&&state.y===t.y&&state.m.every((v,i)=>v===t.m[i]);}
-function save(){try{localStorage.setItem(KEY,JSON.stringify({level:state.level,unlocked:state.unlocked,completed:state.completed,history:state.history}));}catch{}}
-function replay(){const h=[...state.history];state.x=0;state.y=4;state.m=[...ID];state.history=[];h.forEach(k=>apply(k,false));}
+function target(){return state.creator?state.custom:levels[state.level];}
+function match(){const t=target();return state.x===t.x&&state.y===t.y&&same(state.m,t.m);}
+function targetId(){return state.creator?'custom:'+state.custom.x+','+state.custom.y+','+state.custom.m.join(','):'level:'+state.level;}
+function minMoves(t){
+ // The smallest number of moves is Manhattan distance plus the shortest sequence
+ // of allowed orientation operations. Translation and orientation commute.
+ const q=[[...ID,0]],seen=new Set([ID.join(',')]);
+ for(let i=0;i<q.length;i++){
+   const a=q[i].slice(0,4),d=q[i][4];
+   if(same(a,t.m))return Math.abs(t.x)+Math.abs(t.y-4)+d;
+   for(const k of ['rotate','flipv','fliph']){
+     const b=multiply(ops[k].m,a),id=b.join(',');
+     if(!seen.has(id)){seen.add(id);q.push([...b,d+1]);}
+   }
+ }
+ return Infinity;
+}
+function save(){try{localStorage.setItem(KEY,JSON.stringify({
+ level:state.level,unlocked:state.unlocked,completed:state.completed,history:state.history,
+ best:state.best,creator:state.creator,designing:state.designing,custom:state.custom
+}));}catch{}}
+function replay(){
+ const h=[...state.history];state.x=0;state.y=4;state.m=[...ID];state.history=[];
+ h.forEach(k=>apply(k,false));
+}
 function load(){
- try{const s=JSON.parse(localStorage.getItem(KEY));if(!s||!Number.isInteger(s.level))return;
- const unlocked=Number.isInteger(s.unlocked)?Math.max(0,Math.min(4,s.unlocked)):0;
- state.level=Math.max(0,Math.min(unlocked,s.level));state.unlocked=unlocked;
+ try{
+ const s=JSON.parse(localStorage.getItem(KEY));if(!s||!Number.isInteger(s.level))return;
+ state.unlocked=Number.isInteger(s.unlocked)?Math.max(0,Math.min(4,s.unlocked)):0;
+ state.level=Math.max(0,Math.min(state.unlocked,s.level));
  state.completed=Array.isArray(s.completed)?[...new Set(s.completed.filter(n=>Number.isInteger(n)&&n>=0&&n<5))]:[];
- state.history=Array.isArray(s.history)&&s.history.length<=1000&&s.history.every(k=>Object.hasOwn(ops,k))?s.history:[];replay();
+ state.best=s.best&&typeof s.best==='object'&&!Array.isArray(s.best)?Object.fromEntries(
+ Object.entries(s.best).filter(([k,v])=>typeof k==='string'&&Number.isInteger(v)&&v>=0&&v<=1000)):{};
+ const c=s.custom;
+ if(c&&Number.isInteger(c.x)&&c.x>=0&&c.x<5&&Number.isInteger(c.y)&&c.y>=0&&c.y<5&&Array.isArray(c.m)&&c.m.length===4&&c.m.every(v=>[-1,0,1].includes(v)))state.custom={x:c.x,y:c.y,m:[...c.m]};
+ state.creator=!!s.creator;state.designing=!!s.designing&&state.creator;
+ state.history=Array.isArray(s.history)&&s.history.length<=1000&&s.history.every(k=>Object.hasOwn(ops,k))?s.history:[];
+ if(state.designing)state.history=[];
+ replay();
  }catch{}
 }
-function progress(){if(match()&&!state.completed.includes(state.level)){state.completed.push(state.level);state.unlocked=Math.max(state.unlocked,Math.min(4,state.level+1));}}
-function apply(k,draw=true){
- const op=ops[k];if(!op)return;
- if(op.m){state.m=multiply(op.m,state.m);}
- else{const nx=state.x+op.dx,ny=state.y+op.dy;if(nx<0||nx>4||ny<0||ny>4)return;state.x=nx;state.y=ny;}
- state.history.push(k);if(draw){progress();save();render();}
+function progress(){
+ if(!match()||state.designing)return;
+ const id=targetId();
+ if(state.best[id]===undefined||state.history.length<state.best[id])state.best[id]=state.history.length;
+ if(!state.creator&&!state.completed.includes(state.level)){
+   state.completed.push(state.level);
+   state.unlocked=Math.max(state.unlocked,Math.min(4,state.level+1));
+ }
 }
-function startLevel(n){if(n<0||n>state.unlocked||n>4)return;state.level=n;state.history=[];state.x=0;state.y=4;state.m=[...ID];save();render();}
-function undo(){if(!state.history.length)return;state.history.pop();replay();save();render();}
-function reset(){startLevel(state.level);}
+function apply(k,draw=true){
+ if(state.designing)return;
+ const op=ops[k];if(!op)return;
+ if(op.m)state.m=multiply(op.m,state.m);
+ else{
+   const nx=state.x+op.dx,ny=state.y+op.dy;
+   if(nx<0||nx>4||ny<0||ny>4)return;
+   state.x=nx;state.y=ny;
+ }
+ state.history.push(k);
+ if(draw){progress();save();render();}
+}
+function startLevel(n){
+ if(n<0||n>state.unlocked||n>4)return;
+ state.creator=false;state.designing=false;state.level=n;
+ state.history=[];state.x=0;state.y=4;state.m=[...ID];save();render();
+}
+function undo(){if(state.designing||!state.history.length)return;state.history.pop();replay();save();render();}
+function reset(){
+ state.history=[];state.x=0;state.y=4;state.m=[...ID];save();render();
+}
+function create(){
+ state.creator=true;state.designing=true;state.history=[];state.x=0;state.y=4;state.m=[...ID];save();render();
+}
+function designTransform(k){
+ if(!state.creator||!state.designing)return;
+ state.custom.m=multiply(ops[k].m,state.custom.m);save();render();
+}
+function startCustom(){
+ if(!state.creator||minMoves(state.custom)<7)return;
+ state.designing=false;state.history=[];state.x=0;state.y=4;state.m=[...ID];save();render();
+}
 function renderLevels(){
  const box=$('level-list');box.replaceChildren();
  levels.forEach((level,i)=>{
-  const b=document.createElement('button');b.className='level-button';
-  if(i===state.level)b.classList.add('current');
-  if(state.completed.includes(i))b.classList.add('finished');
-  b.disabled=i>state.unlocked;
-  b.textContent=(state.completed.includes(i)?'✓ ':'')+'Level '+(i+1)+(i>state.unlocked?' 🔒':'');
-  b.setAttribute('aria-current',i===state.level?'step':'false');
-  b.addEventListener('click',()=>startLevel(i));box.appendChild(b);
+   const b=document.createElement('button');b.className='level-button';
+   if(!state.creator&&i===state.level)b.classList.add('current');
+   if(state.completed.includes(i))b.classList.add('finished');
+   b.disabled=i>state.unlocked;
+   b.textContent=(state.completed.includes(i)?'✓ ':'')+'Level '+(i+1)+(i>state.unlocked?' 🔒':'');
+   b.setAttribute('aria-current',!state.creator&&i===state.level?'step':'false');
+   b.addEventListener('click',()=>startLevel(i));box.appendChild(b);
  });
  $('progress').textContent=state.completed.length+' of 5 completed';
- $('level-info').textContent=levels[state.level].description;
+ $('level-info').textContent=state.creator?
+  (state.designing?'Design mode: click the grid to select a target square.':'Custom challenge: reach the target you designed.'):
+  levels[state.level].description;
+ $('make-level').hidden=state.creator;
+ $('back-levels').hidden=!state.creator;
+ $('creator-panel').hidden=!state.creator;
+ $('board').classList.toggle('designing',state.designing);
+ $('design-start').hidden=!state.designing;
+ $('design-edit').hidden=state.designing;
+ ['design-rotate','design-flipv','design-fliph'].forEach(k=>$(k).disabled=!state.designing);
+ const min=minMoves(state.custom);
+ $('creator-summary').textContent='Target: column '+(state.custom.x+1)+', row '+(state.custom.y+1)+' (from top) · Minimum: '+min+' moves';
+ $('design-start').disabled=min<7;
+ $('creator-note').textContent=min>=7?'Valid challenge: at least 7 moves required.':'Choose a farther square or another orientation to require at least 7 moves.';
 }
 function render(){
- const t=levels[state.level],h=state.history;
+ const t=target(),h=state.history;
  renderLevels();
  $('target-flag').setAttribute('transform','translate('+(60+80*t.x)+' '+(68+80*t.y)+') matrix('+t.m.join(' ')+' 0 0)');
  $('target-cell').setAttribute('x',22+80*t.x);$('target-cell').setAttribute('y',30+80*t.y);
- $('target-label').setAttribute('x',60+80*t.x);
- $('target-label').textContent='TARGET';
- $('board').setAttribute('aria-label','Five by five grid. Target column '+(t.x+1)+', row '+(t.y+1)+' from top.');
+ $('target-label').setAttribute('x',60+80*t.x);$('target-label').textContent='TARGET';
+ $('board').setAttribute('aria-label','Five by five grid. Target column '+(t.x+1)+', row '+(t.y+1)+' from top.'+(state.designing?' Click to select the target square.':''));
  $('player-flag').setAttribute('transform','translate('+(60+80*state.x)+' '+(68+80*state.y)+') matrix('+state.m.join(' ')+' 0 0)');
  const shifts=h.filter(k=>!ops[k].m).length;
  $('total').textContent=h.length;$('shifts').textContent=shifts;$('transforms').textContent=h.length-shifts;
  const history=$('history');history.replaceChildren();
- if(!h.length){const d=document.createElement('div');d.className='empty';d.textContent='Your moves will appear here.';history.appendChild(d);}
- h.forEach((k,i)=>{const d=document.createElement('div');d.className='history-row';const n=document.createElement('b');n.textContent=(i+1)+'.';const v=document.createElement('span');v.textContent=ops[k].label;d.append(n,v);history.appendChild(d);});
- history.scrollTop=history.scrollHeight;
- $('undo').disabled=$('copy').disabled=!h.length;
- ['up','down','left','right'].forEach(k=>{const op=ops[k];$(k).disabled=state.x+op.dx<0||state.x+op.dx>4||state.y+op.dy<0||state.y+op.dy>4;});
- const won=match();$('success').hidden=!won;
- $('status').textContent=won?'✓ Level '+(state.level+1)+' complete':state.x===t.x&&state.y===t.y?'Match the orientation':'Level '+(state.level+1)+' of 5';
- $('next-level').hidden=!won||state.level===4;
- if(won){$('success-text').textContent=(state.level===4?'All five levels complete! ':'')+'Solved in '+h.length+' moves ('+shifts+' shifts, '+(h.length-shifts)+' rotations/reflections).';$('live').textContent='Level '+(state.level+1)+' complete.';}
+ if(!h.length){const d=document.createElement('div');d.className='empty';d.textContent=state.designing?'Set your target, then start the challenge.':'Your moves will appear here.';history.appendChild(d);}
+ h.forEach((k,i)=>{
+  const d=document.createElement('div');d.className='history-row';
+  const n=document.createElement('b');n.textContent=(i+1)+'.';
+  const v=document.createElement('span');v.textContent=ops[k].label;
+  d.append(n,v);history.appendChild(d);
+ });history.scrollTop=history.scrollHeight;
+ $('undo').disabled=$('copy').disabled=state.designing||!h.length;
+ $('reset').disabled=state.designing;
+ for(const k of ['up','down','left','right']){
+  const op=ops[k];$(k).disabled=state.designing||state.x+op.dx<0||state.x+op.dx>4||state.y+op.dy<0||state.y+op.dy>4;
+ }
+ for(const k of ['rotate','flipv','fliph'])$(k).disabled=state.designing;
+ const id=targetId(),best=state.best[id];
+ $('best-line').textContent=state.creator?'Custom level · Personal best: '+(best===undefined?'Not yet completed':best+' moves'):
+  'Level '+(state.level+1)+' · Personal best: '+(best===undefined?'Not yet completed':best+' moves');
+ const won=!state.designing&&match();$('success').hidden=!won;
+ $('status').textContent=state.designing?'Design your target':won?'✓ '+(state.creator?'Custom level':'Level '+(state.level+1))+' complete':
+  state.x===t.x&&state.y===t.y?'Match the orientation':state.creator?'Custom challenge':'Level '+(state.level+1)+' of 5';
+ $('next-level').hidden=!won||state.creator||state.level===4;
+ if(won){
+  const minimum=minMoves(t);
+  $('success-text').textContent=(state.creator?'Custom challenge complete! ':state.level===4?'All five levels complete! ':'')+
+   'Solved with '+shifts+' shifts and '+(h.length-shifts)+' rotations/reflections.';
+  $('result-moves').textContent=h.length;
+  $('result-min').textContent=minimum;
+  $('result-best').textContent=best===undefined?h.length:best;
+  $('result-feedback').textContent=h.length===minimum?'You found a most efficient solution!':'Can you solve it in '+minimum+' moves? Try a different sequence.';
+  $('live').textContent='Level complete in '+h.length+' moves. Minimum '+minimum+'.';
+ }
 }
 async function copy(){
- const str="That's Next Level! — Level "+(state.level+1)+' — '+state.history.length+' moves\n'+state.history.map((k,i)=>(i+1)+'. '+ops[k].label).join('\n');
- try{await navigator.clipboard.writeText(str);$('copy').textContent='Copied!';setTimeout(()=>$('copy').textContent='Copy moves',1500);}catch{window.prompt('Copy moves:',str);}
+ const title=state.creator?'Custom Challenge':'Level '+(state.level+1);
+ const str="That's Next Level! — "+title+' — '+state.history.length+' moves\n'+state.history.map((k,i)=>(i+1)+'. '+ops[k].label).join('\n');
+ try{await navigator.clipboard.writeText(str);$('copy').textContent='Copied!';setTimeout(()=>$('copy').textContent='Copy moves',1500);}
+ catch{window.prompt('Copy moves:',str);}
 }
-load();progress();save();Object.keys(ops).forEach(k=>$(k).addEventListener('click',()=>apply(k)));
+load();progress();save();
+Object.keys(ops).forEach(k=>$(k).addEventListener('click',()=>apply(k)));
 $('undo').addEventListener('click',undo);$('reset').addEventListener('click',reset);$('retry').addEventListener('click',reset);
 $('next-level').addEventListener('click',()=>startLevel(state.level+1));$('copy').addEventListener('click',copy);
-window.addEventListener('keydown',e=>{if(e.altKey||e.ctrlKey||e.metaKey||e.repeat||['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName))return;
- const k={ArrowUp:'up',ArrowDown:'down',ArrowLeft:'left',ArrowRight:'right'}[e.key];if(k){e.preventDefault();apply(k);}
+$('make-level').addEventListener('click',create);
+$('back-levels').addEventListener('click',()=>startLevel(state.level));
+$('design-edit').addEventListener('click',()=>{state.designing=true;state.history=[];state.x=0;state.y=4;state.m=[...ID];save();render();});
+$('design-start').addEventListener('click',startCustom);
+$('design-rotate').addEventListener('click',()=>designTransform('rotate'));
+$('design-flipv').addEventListener('click',()=>designTransform('flipv'));
+$('design-fliph').addEventListener('click',()=>designTransform('fliph'));
+$('board').addEventListener('click',e=>{
+ if(!state.designing)return;
+ const rect=$('board').getBoundingClientRect();
+ const x=(e.clientX-rect.left)*440/rect.width,y=(e.clientY-rect.top)*474/rect.height;
+ if(x<20||x>=420||y<28||y>=428)return;
+ state.custom.x=Math.floor((x-20)/80);state.custom.y=Math.floor((y-28)/80);
+ save();render();
+});
+window.addEventListener('keydown',e=>{
+ if(e.altKey||e.ctrlKey||e.metaKey||e.repeat||['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName))return;
+ const k={ArrowUp:'up',ArrowDown:'down',ArrowLeft:'left',ArrowRight:'right'}[e.key];
+ if(k&&!state.designing){e.preventDefault();apply(k);}
 });
 render();
 })();
