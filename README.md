@@ -1,25 +1,33 @@
 # That's Next Level! — Geometry Transformations
 
-A standalone browser-based version of the Math Medic Geometry Lesson 3.1 flag transformation activity.
+An interactive browser game based on the flag transformation activity in Math Medic Geometry Lesson 3.1.
 
-## Run
+## Play
 
-Open `index.html` in any modern web browser (Chrome, Edge, Firefox, Safari). No installation, build process, account, or internet connection is required.
+Live site: https://teresa-mcclintic.github.io/flag-transformations-app/
+
+Open `index.html` locally in a browser or use the GitHub Pages link above.
+
+## Five levels
+
+All levels begin with the flag in the bottom-left square of a 5 × 5 grid. Players must match the target's **square and orientation**. The original worksheet target is Level 1; later levels change the destination and target orientation. Complete a level to unlock the next one. Completed levels can be replayed.
 
 ## Controls
 
-- Arrow buttons or keyboard arrow keys: move one grid square per move.
-- Rotate 90° counterclockwise: changes the flag orientation in place.
-- Flip vertically: reflection across a vertical axis through the current square (left–right reversal).
-- Flip horizontally: reflection across a horizontal axis through the current square (up–down reversal).
-- Undo: reverse the last move.
-- Reset: return to the starting flag position.
-- Copy moves: copy the numbered move sequence.
+- Large, labeled direction pad (or arrow keys): move exactly one square.
+- Rotate 90° counterclockwise: rotate in place.
+- Flip vertically: reflect across a vertical line (left–right reflection).
+- Flip horizontally: reflect across a horizontal line (up–down reflection).
+- Undo, Reset, and Copy moves are available throughout.
+- Total moves, shifts, and orientation changes are counted separately.
+- After success, choose **Next level** or retry the current level.
 
-The grid is 5×5. The flag starts in the bottom-left square. The target is in column 4, row 3, in the same orientation shown on page 1 of the provided worksheet. Both location and orientation must match.
+Only valid moves are counted; pressing toward a grid boundary does not count as a move.
 
-The current game is saved **locally in the browser** (localStorage). It does not collect student names or transmit data to a server. The move count includes each valid shift, 90° rotation, or flip; moves blocked by the grid boundary are not counted.
+## Privacy and progress
 
-## Optional hosting
+All progress and move history remain in the browser's `localStorage`. No login, backend, analytics, or student information is required. Clearing site data may reset progress. The game does not submit the worksheet's written answers.
 
-To share with students, upload the files to a static website host (such as GitHub Pages) and share the resulting link. No backend is needed.
+## Technology
+
+Single-file HTML, CSS and JavaScript. No dependencies, installation, build step, or server are needed.
